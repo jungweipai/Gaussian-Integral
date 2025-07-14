@@ -1,0 +1,323 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{siunitx}
+\usepackage{tikz,tikz-3dplot}
+
+\title{Solving \textbf{Gaussian Integral} Involving Jacobian Matrix and Three-Dimensional Analysis}
+\author{Jung-Wei Pai}
+\date{}
+
+\begin{document}
+\maketitle
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\vspace{0.5cm}
+This work delves into the fascinating realm of Gaussian integrals and their applications in conjunction with Jacobian matrices and three-dimensional analysis. The Gaussian integral, also known as the Euler-Poisson integral, stands as one of the fundamental pillars in mathematical analysis, probability theory, and theoretical physics.
+
+\vspace{0.5cm}
+Our exploration begins with the classical one-dimensional Gaussian integral and methodically extends to multi-dimensional spaces, where the complexity and richness of the mathematical structures become apparent. The incorporation of Jacobian matrices provides a powerful framework for understanding coordinate transformations and their effects on these integrals, allowing us to navigate between different representational systems while preserving the essential mathematical relationships.
+
+\vspace{0.5cm}
+Three-dimensional analysis offers a particularly illuminating context for these mathematical tools, as it connects abstract formulations with physical intuition. Whether in quantum mechanics, statistical mechanics, or field theory, these techniques prove indispensable for describing natural phenomena and solving complex problems.
+
+\vspace{0.5cm}
+This work aims to serve both as a rigorous mathematical treatment and as a practical guide for researchers and students. We have endeavored to balance theoretical depth with computational approaches, providing insights into both the elegant structures underlying these mathematical objects and their practical implementations.
+
+\vspace{0.5cm}
+The methods presented herein represent not only valuable computational tools but also windows into the profound interconnections between different branches of mathematics and physics. It is our hope that readers will find in these pages both the technical skills needed for their research and a deeper appreciation for the beautiful mathematical structures that underlie our understanding of the physical world.
+
+\section*{Introction}
+The Gaussian integral stands as one of the most elegant and powerful mathematical tools in modern analysis. Named after the prolific mathematician Carl Friedrich Gauss, this integral forms the cornerstone of numerous disciplines including probability theory, statistical mechanics, quantum field theory, and signal processing. In its most fundamental form, the Gaussian integral evaluates the area under the bell-shaped curve described by the exponential function $e^{-x^2}$ over the entire real line.
+
+\vspace{0.5cm}
+What makes the Gaussian integral particularly remarkable is not merely its mathematical beauty but its profound utility across diverse fields. When extended to multiple dimensions, it provides essential techniques for handling complex systems with numerous degrees of freedom. The introduction of Jacobian matrices in this context allows us to navigate between different coordinate systems, preserving the physical significance of our calculations while potentially simplifying the mathematical framework.
+
+\vspace{0.5cm}
+Three-dimensional analysis serves as a natural setting for exploring these mathematical structures, offering both practical relevance and theoretical insight. The transformation from Cartesian to spherical or cylindrical coordinates, facilitated by the Jacobian determinant, often reveals hidden symmetries and simplifies otherwise intractable problems. These coordinate transformations, though technically sophisticated, provide elegant solutions to problems that would remain formidable in their original formulation.
+
+\vspace{0.5cm}
+This work aims to provide a comprehensive examination of Gaussian integrals, beginning with the one-dimensional case and systematically extending to higher dimensions. We will explore various methods of evaluation, including the classical technique of squaring the integral and transforming to polar coordinates. The role of the Jacobian matrix in these transformations will be thoroughly examined, highlighting its geometric interpretation and mathematical significance.
+
+\vspace{0.5cm}
+Throughout our discussion, we will maintain a balance between rigorous mathematical formalism and intuitive understanding, providing both theoretical foundations and practical computational techniques. Applications will be drawn from various fields to illustrate the versatility and power of these mathematical tools, demonstrating how abstract mathematical concepts translate into concrete problem-solving strategies.
+
+\vspace{0.5cm}
+By the conclusion of this work, readers should possess not only a technical understanding of Gaussian integrals and their evaluation using Jacobian matrices in three-dimensional space, but also an appreciation for the elegant mathematical structures that underlie these techniques and their widespread applicability across scientific disciplines.
+
+\section*{The Gaussian Integral in One Dimension}
+The basic one-dimensional Gaussian integral is:
+
+\[
+    \int_{-\infty}^{\infty} e^{-x^{2}}\,dx
+\]
+
+\vspace{0.5cm}
+This integral cannot be evaluated using elementary antiderivatives, but it can be solved by squaring the integral and switching to polar coordinates, which brings us to multi-dimensional methods. However, one will use the spherical coordinates to approach the final result of this Gaussian integral.
+
+\section*{Extending to Higher Dimensions} 
+In three dimensions, a Gaussian function might look like:
+
+\[
+    f(x,y,z) = e^{-(x^2 + y^2 + z^2)}
+\]
+
+\vspace{0.5cm}
+The integral of the multivariable function $f(x,y,z)$ would be in a form of:
+
+\vspace{0.5cm}
+\[
+    \iiint_{\mathbb{R}^3} f(x,y,z)\,dx\,dy\,dz = \iiint_{\mathbb{R}^3} e^{-(x^2 + y^2 + z^2)}\,d(x,y,z)
+\]
+
+\vspace{0.5cm}
+To compute this, it is advantageous to change from Cartesian to spherical coordinates, because the exponent depends only on the radius:
+
+\vspace{0.5cm}
+\[
+    r = \sqrt{x^{2} + y^{2} + z^{2}}
+\]
+
+\section*{Role of the Jacobian Matrix}
+When changing variables in multiple integrals—such as going from Cartesian to spherical coordinates—we must adjust for how volume elements change. This is where the Jacobian matrix comes in. The transformation from Cartesian coordinates $(x, y, z)$ to spherical coordinates $(r, \theta, \varphi)$, is given by the function $\mathbf{F}: \mathbb{R}^{3} \to \mathbb{R}^{+} \times [0, \pi) \times [0, 2 \pi)$ with components
+
+\vspace{0.5cm}
+\[
+    \mathbf{F} \left(x, y, z \right)=
+    \begin{cases}
+        x = F_1 (r, \theta, \varphi) = r \sin{(\theta)} \cos{(\varphi)} \\
+        y = F_2 (r, \theta, \varphi) = r \sin{(\theta)} \sin{(\varphi)} \\
+        z = F_3 (r, \theta, \varphi) = r \cos{(\theta)}
+    \end{cases}
+\]
+
+\vspace{0.5cm}
+The Cartesian coordinate notation is $\mathbf{X}_i$, where the subscript $i$ is the number of dimention. The spherical coordinate notation (in this article) is denoted as $\mathbf{v}$ in general. A 3D spherical coordinate system uses three numbers $(r, \theta, \varphi)$ to represent a point in space, where $r \in \mathbb{R}^{+}$ is the radial distance from the origin, $\theta \in \left[ 0, \pi \right)$ is the azimuthal angle (similar to polar coordinates, akin to **latitude**), and $\varphi \in \left[ 0, 2\pi \right)$ is the polar angle (or zenith angle, akin to \textbf{longitude}). The code below is the visualization for the spherical coordinate system in \LaTeX\ language.
+
+\begin{center}
+    \tdplotsetmaincoords{70}{115}
+    %setting up the identity of each variable
+    \begin{tikzpicture} [scale=3, tdplot_main_coords, axis/.style={->,color=black, ultra thin}, vector/.style={-stealth,blue,ultra thick}, vector guide/.style={dashed,blue,ultra thin}]
+
+        %origin of the coodinate system
+        \coordinate (O) at (0,0,0);
+        
+        %setting the main vector (example purpose)
+        \pgfmathsetmacro{\ax}{1}
+        \pgfmathsetmacro{\ay}{1}
+        \pgfmathsetmacro{\az}{1.5}
+        \coordinate (P) at (\ax,\ay,\az){};
+
+        %setting up the axis lines with labeling 
+        \draw[axis] (0,0,0) -- (2,0,0) node[anchor=north east]{$x$};
+        \draw[axis] (0,0,0) -- (0,2,0) node[anchor=north west]{$y$};
+        \draw[axis] (0,0,0) -- (0,0,2) node[anchor=south]{$z$};
+
+        %the azimuthal angle, or the latitude angle
+        \tdplotsetrotatedcoords{0}{90}{0}
+        \tdplotdrawarc[tdplot_rotated_coords, thick, <-]{(0,0,0)}{0.5}{146.31}{180}{anchor=south}{$\theta$}
+        \tdplotsetrotatedcoords{90}{90}{0}
+        \tdplotdrawarc[tdplot_rotated_coords, thick, <-]{(0,0,0)}{0.5}{213.69}{180}{anchor=south}{$\theta$}
+
+        %visualizing the guiding line of the main vector
+        \draw[vector guide] (\ax,0,0) -- (\ax,\ay,0);
+        \draw[vector guide] (0,\ay,0) -- (\ax,\ay,0);
+        \draw[vector guide] (O) -- (\ax,\ay,0);
+        \draw[vector guide] (\ax,\ay,0) -- (P);
+        \draw[vector guide] (0,0,\az) -- (0,\ay,\az);
+        \draw[vector guide] (0,\ay,0) -- (0,\ay,\az);
+        \draw[vector guide] (O) -- (0,\ay,\az);
+        \draw[vector guide] (0,\ay,\az) -- (P);
+        \draw[vector guide] (\ax,0,0) -- (\ax,0,\az);
+        \draw[vector guide] (0,0,\az) -- (\ax,0,\az);
+        \draw[vector guide] (\ax,0,\az) -- (P);
+        \draw[vector guide] (O) -- (\ax,0,\az);
+    
+        %labeling the name of the main vector
+        \draw (O) -- (P) node[midway, anchor=north west]{$r=\sqrt{x^{2}+y^{2}+z^{2}}$};
+    
+        %the zenith angle or the longitude angle
+        \tdplotdrawarc[tdplot_main_coords,color=black, thick,->]{(0,0,0)}{0.5}{0}{45}{anchor=north,color=black}{$\varphi$}
+
+        %labeling the dedication point (end point) of the vector
+        \draw[vector] (O) -- (P) node[anchor=west, color=black]{$(x,y,z) = (r,\theta,\varphi)$};
+        \filldraw[black] (P) circle (0.5pt);
+    \end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+The function $\mathbf{F} \left(x, y, z \right)$ represent the transformation from Cartesian coordinates $(x, y, z)$ to spherical coordinates $(r, \theta,  \varphi)$. They describe how any point in 3D space can be re-expressed in terms of radius, polar angle, and azimuthal angle. Another form on function mapping is to express them in a form of vector. 
+
+\vspace{0.5cm}
+\[
+    \mathbf{F} \left( 
+        \begin{bmatrix}
+        x\\
+        y\\
+        z
+    \end{bmatrix} \right) = 
+    \begin{bmatrix}
+        F_x (r, \theta, \varphi) \\
+        F_y (r, \theta, \varphi) \\
+        F_z (r, \theta, \varphi)
+    \end{bmatrix} = 
+    \begin{bmatrix}
+        r \sin{(\theta)} \cos{(\varphi)} \\
+        r \sin{(\theta)} \sin{(\varphi)} \\
+        r \cos{(\theta)}
+    \end{bmatrix}
+\]
+
+\vspace{0.5cm}
+Here, the vector-valued function $\mathbf{F}$ is written in matrix form to clearly show the mapping from Cartesian coordinates to spherical coordinates. This form makes it easier to construct the Jacobian matrix by taking partial derivatives of each component. 
+
+\vspace{0.5cm}
+{\large
+\[
+    \boldsymbol{J}_{\mathbf{F}} (r, \theta, \varphi) = 
+    \left[ \frac{d(x, y, z)}{d(r,\theta,\varphi)} \right] =
+    \begin{bmatrix}
+        \vspace{0.25cm}
+        \frac{\partial x}{\partial r} & \frac{\partial x}{\partial \theta} & \frac{\partial x}{\partial \varphi} \\
+        \vspace{0.25cm}
+        \frac{\partial y}{\partial r} & \frac{\partial y}{\partial \theta} & \frac{\partial y}{\partial \varphi} \\
+        \frac{\partial z}{\partial r} & \frac{\partial z}{\partial \theta} & \frac{\partial z}{\partial \varphi}        
+    \end{bmatrix}
+\]
+}
+
+\vspace{0.5cm}
+The Jacobian matrix $\boldsymbol{J}_{\mathbf{F}}$ encodes the rate of change of each Cartesian component with respect to each spherical variable. Each entry corresponds to a partial derivative $\frac{\partial \mathbf{F}_i}{\partial \mathbf{v}_j}$, and the full matrix shows how the volume element will deform under the transformation. 
+
+\vspace{0.5cm}
+\[
+    \begin{bmatrix}
+        \vspace{0.5cm}           
+        \frac{\partial}{\partial r} (r \sin{(\theta)} \cos{(\varphi)}) & \frac{\partial}{\partial \theta} (r \sin{(\theta)} \cos{(\varphi)}) & \frac{\partial}{\partial \varphi} (r \sin{(\theta)} \cos{(\varphi)})\\
+        \vspace{0.5cm}
+        \frac{\partial}{\partial r} (r \sin{(\theta)} \sin{(\varphi)}) & \frac{\partial}{\partial \theta} (r \sin{(\theta)} \sin{(\varphi)}) & \frac{\partial}{\partial \varphi} (r \sin{(\theta)} \sin{(\varphi)})\\
+        \frac{\partial}{\partial r} (r \cos{(\theta)}) & \frac{\partial}{\partial \theta} (r \cos{(\theta)}) & \frac{\partial}{\partial \varphi} (r \cos{(\theta)})    
+    \end{bmatrix}
+\]
+
+\vspace{0.5cm}
+These are the computed partial derivatives based on the earlier definitions of $x,y,z$. Simplifying each expression yields a concrete Jacobian matrix filled with trigonometric and radial terms.
+
+\vspace{0.5cm}
+\[
+    \begin{bmatrix}
+        \vspace{0.5cm}
+        \sin{(\theta)} \cos{(\varphi)} & r \cos{(\theta)} \cos{(\varphi)} & - r \sin{(\theta)} \sin{(\varphi)}\\
+        \vspace{0.5cm}
+        \sin{(\theta)} \sin{(\varphi)} & r \cos{(\theta)} \sin{(\varphi)} & r \sin{(\theta)} \cos{(\varphi)}\\
+        \cos{(\theta)} & - r \sin{(\theta)} & 0
+    \end{bmatrix}
+\]
+
+\vspace{0.5cm}
+The Jacobian determinant tells us how to scale the volume element when switching coordinate systems.
+
+\vspace{0.5cm}
+\[
+    \det (\boldsymbol{J}_{\mathbf{F}} (r, \theta, \varphi)) = r^{2} \sin{\theta}
+\]
+
+\vspace{0.5cm}
+After some algebraic simplification, the determinant of the Jacobian represents the scaling factor of volume during the coordinate change. For spherical coordinates, this determinant simplifies to $r^{2} \sin{\theta}$, though it may appear differently depending on formatting.
+
+\section*{Solving the Integral}
+Having established the transformation from Cartesian to spherical coordinates and derived the corresponding Jacobian determinant, we are now prepared to evaluate the Gaussian integral in three dimensions. This step marks the transition from geometrical transformation to analytical computation. The goal is to rigorously calculate the integral of the form $\iiint_{\mathbb{R}^3} e^{-(x^2 + y^2 + z^2)}\,dx\,dy\,dz$. To build a foundation for this, we begin by setting the one-dimensional Gaussian integral by $I$.
+
+\vspace{0.5cm}
+\[
+    I^{3} = \iiint_{\mathbb{R}^3} e^{-(x^2 + y^2 + z^2)}\,dx\,dy\,dz = \iiint_{\mathbb{R}^+ \times \left[0,\pi \right) \times \left[0, 2\pi \right)} e^{-r^2} (r^{2} \sin{\theta}) \,dr\,d\theta\,d\varphi 
+\]
+
+\vspace{0.5cm}
+Expand the integral
+
+\vspace{0.5cm}
+\[
+    \int_{0}^{\infty} r^{2} e^{-r^2}\,dr \, \int_{0}^{\pi} \sin{\theta}\,d\theta \, \int_{0}^{2\pi}\,d\varphi \,= \,    \int_{0}^{\infty} r^{2} e^{-r^2}\,dr \, \left(\cos{\theta}\right)\big]_{0}^{\pi} \, \left(\varphi\right)\big]_{0}^{2\pi} 
+\]
+
+\vspace{0.5cm}
+Resulting
+
+\vspace{0.5cm}
+\[
+    I^{3} \, = \, 2\pi \int_{0}^{\infty} r^{2} e^{-r^2}\,dr
+\]
+
+\vspace{0.5cm}
+Now, one can substitute $u = r^{2}$, thus having $du = 2r$. Plugging in $\infty$ and $0$ into $u$ will result the 
+
+\vspace{0.5cm}
+\[
+    I^{3} = 2\pi \int_{0}^{\infty} \sqrt{u} e^{-u} \, du
+\]
+
+\vspace{0.5cm}
+From the property of integral of $\int U\,dV = UV - \int V\,dU$, derived from the derivative of multiplication. Then by substituding $U = \sqrt{u}$ and $dV = e^{-u}\,dr$, will resulting in $dU = \frac{1}{2\sqrt{u}}$ and $V = -e^{-u}$. Thus, one can do the follwing substitution 
+
+\vspace{0.5cm}
+\[
+    2\pi \left( \left. \sqrt{u}(-e^{-u}) \right]_{0}^{\infty} - \int_{0}^{\infty} -e^{-u}(\frac{1}{2\sqrt{u}}\,du) \right)
+\]
+
+\vspace{0.5cm}
+The acceleration of the exponential function is always faster the general polynomial one, meaning $e^{-u}$ will overtake $\sqrt{u}$. So the term of $\sqrt{u}\left.(-e^{-u}) \right]_{0}^{\infty}$ will thus be $0 - 0$. And after some mathematical rearrangement, one would obtain the following
+
+\vspace{0.5cm}
+\[
+    \pi \int_{0}^{\infty} \frac{e^{-u}}{\sqrt{u}} \, du
+\]
+
+\vspace{0.5cm}
+And lastly, by plugging back $u=r^2$, having $du=2r\,dr$, one will have
+
+\vspace{0.5cm}
+\[
+    \pi \int_{0}^{\infty} \frac{e^{-r^{2}}}{r}(2r)\, dr \,=\, 2\pi \int_{0}^{\infty} e^{-r^{2}} \, dr = \pi \int_{-\infty}^{\infty} e^{-r^{2}} \, dr
+\]
+
+\vspace{0.5cm}
+Remeber, $\int_{-\infty}^{\infty} e^{-r^{2}} \, dr$ is the origional Gaussian Integral in one dimension.
+
+\vspace{0.5cm}
+\[
+    I^{3} \, = \, \pi \cdot I \longrightarrow I^2 \, = \, \pi
+\]
+
+\vspace{0.5cm}
+Since variable within the integral $r$ can be any other variable, one can use $x$ as well. Ultimately, one will have
+
+\vspace{0.5cm}
+\[
+    \int_{-\infty}^{\infty} e^{-x^{2}} \, dx \, = \, \sqrt{\pi}
+\]
+
+\section*{Conclusion}
+In this comprehensive exploration of Gaussian integrals, Jacobian matrices, and three-dimensional analysis, we have traversed a mathematical journey from the foundations of coordinate transformations to the elegant evaluation of multi-dimensional integrals. Our investigation began with the examination of the transformation between Cartesian and spherical coordinate systems, where we meticulously derived the Jacobian matrix and its determinant, crucial for understanding how volume elements transform across different coordinate representations.
+
+\vspace{0.5cm}
+Through careful application of substitution techniques and integration methods, we successfully evaluated the three-dimensional Gaussian integral, demonstrating how it relates to its one-dimensional counterpart. The result, showing that the integral of $e^{-x^{2}}$ over the entire real line equals $\sqrt{\pi}$, is not merely a mathematical curiosity but a fundamental result with far-reaching applications in probability theory, statistical mechanics, quantum physics, and signal processing.
+
+\vspace{0.5cm}
+This analysis highlights the power of coordinate transformations in simplifying complex mathematical problems. The spherical coordinate system provided a natural framework for addressing the symmetry inherent in the Gaussian function, reducing a seemingly complicated three-dimensional integral to a more tractable form. The Jacobian determinant $r^{2}\sin(\theta)$ emerged as the critical factor that accurately accounts for the volume distortion during this transformation.
+
+\vspace{0.5cm}
+Beyond the technical results, this work illustrates the beautiful interconnectedness of different mathematical disciplines: calculus, linear algebra, and geometric analysis. The methods developed here extend naturally to higher dimensions and more complex integrals, offering a template for tackling a wide range of mathematical and physical problems that involve multi-dimensional spaces and transformations.
+
+\vspace{0.5cm}
+Future directions might include extensions to more general classes of integrals, applications to specific physical systems, or explorations of the relationship between Gaussian integrals and other mathematical structures such as Fourier transforms or special functions. The techniques presented here provide a solid foundation for such advanced investigations.
+\end{document}
